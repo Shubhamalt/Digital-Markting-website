@@ -1,0 +1,292 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    padding: 0;
+}
+::-webkit-scrollbar {
+    display: none; 
+}
+
+.scroll-container {
+    height: 100vh;
+    overflow-y: scroll; 
+    scroll-snap-type: y mandatory;
+}
+
+.section {
+    scroll-snap-align: start; 
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Card scroll function ends here*/
+
+h1 {
+    font-size: 55px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+h6 {
+    font-size: 40px;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.gap123{
+    margin-top: 160px;
+}
+/* Logo css starts here */
+.logo {
+    height: 80px;
+    width: 100%;
+}
+/* Logo css ends here */
+
+/* Chatbot css starts from here */
+
+/* css for chatbox of chatbot starts here */
+#chatbox{
+    overflow-y: scroll;
+}
+.overlap {
+    position: fixed;
+    right: 5px;
+    bottom: 20px;
+    z-index: 13;
+}
+
+.messagebox{
+    margin-left: 90rem;
+    width: 19%;
+}
+.chatdisplay{
+    margin-top: auto;
+    margin-left: 90rem;
+    height: 300px;
+    z-index: 12; 
+    width: 400px;   
+    background-color: white;  
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+.chatbtn {
+    position: fixed;
+    bottom: 10px;
+    padding: 1%;
+    right: 0.8rem;  
+    z-index: 12;  
+    background-color: none;
+    border: none;
+    font-size: 45px;
+    color: purple;
+    background: none;
+}
+.sendbtn{
+    margin-bottom: 5%;
+}
+
+/* css for chatbox of chatbot ends here */
+
+/* Chatbot css ends here */
+
+/* cs for about us page */
+
+
+
+/* cs for about us page ends */
+
+/* ---------- css for booking page starts here ---------- */
+
+.radius{
+    height: 700px;
+    width: 1200px;
+    border: 1px solid #b197fc;
+    border-radius: 1%;
+    box-shadow: 5%;
+}
+.line{
+    border-right: 1px solid #b197fc;
+    height: 700px;
+}
+
+.bookbgimg{
+    background-image: url(../img/meeting3.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 93vh;
+    display: flex;
+    align-items: center;
+}
+.bookbox{
+    margin-top: 20%;
+}
+.borderbox{
+    border: 1px solid #b197fc;
+}
+input[name="detail"] {
+    height: 60%;
+    padding: 0.5rem;
+}
+
+/* ---------- css for other company and stic company starts ---------- */
+
+.box {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#othercompimg {
+    position: absolute;
+    padding: 0%;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/8.png);
+    background-size: cover;
+}
+
+#sticcompimg {
+    position: absolute;
+    padding: 0%;
+    height: 100%;
+    width: 50%; 
+    min-width: 10%;
+    max-width: 90%;
+    resize: horizontal;
+    overflow: hidden;
+    background-image: url(../img/7.png);
+    background-size: cover;
+    border-right: 2px solid black; 
+}
+
+/* ---------- css for other company and stic company ends ---------- */
+
+
+/* css for responsiveness starts */
+/* 4k */
+@media (max-width: 2561px) {
+    .messagebox{
+        width: 18%;
+    }
+}
+/* 3xl */
+@media (max-width: 1858px){
+    .chatdisplay {
+        margin-left: 70rem; 
+        height: auto;       
+        min-height: 150px; 
+    }
+    .messagebox{
+        margin-left: 70rem;
+    }
+    .chatbtn{
+        margin-left: 95rem;
+    }
+}
+/* 2xl */
+@media (max-width: 1536px) {
+    .chatdisplay {
+        margin-left: 70rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 70rem;
+    }
+    .chatbtn{
+        margin-left: 70rem;
+    }
+}
+/* xl */
+@media (max-width: 1280px) {
+    .chatdisplay {
+        margin-left: 7rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 7rem;
+        width: 60%;
+    }
+    .chatbtn{
+        margin-left: 65rem;
+    }
+}
+@media (max-width: 1089px){
+    .chatdisplay {
+        margin-left: 7rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 7rem;
+    }
+    .chatbtn{
+        margin-left: 60rem;
+    }
+}
+/* lg */
+@media (max-width: 1024px){
+    .chatdisplay {
+        margin-left: 7rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 7rem;
+        width: 60%;
+    }
+    .chatbtn{
+        margin-left: 40rem;
+    }
+}
+/* md */
+@media (max-width: 769px){
+    .chatdisplay {
+        margin-left: 7rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 7rem;
+    }
+    .chatbtn{
+        margin-left: 35rem;
+    }
+}
+/* sm */
+@media (max-width: 641px) {
+    .chatdisplay {
+        margin-left: 7rem;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .chatbtn{
+        margin-left: 25rem;
+    }
+}
+/* xs */
+@media (max-width: 475px){
+    .chatdisplay {
+        margin-left: 7rem;
+        width: 100%;  
+        height: auto;       
+        min-height: 150px;  
+    }
+    .messagebox{
+        margin-left: 7rem;
+        width: 50%;
+    }
+    .chatbtn{
+        margin-left: 290px;
+        width: auto;
+    }
+}
+/* css for responsiveness ends */
+
+
