@@ -3,19 +3,19 @@
 <!-- Navbar -->
 
 <div class="scroll-container">
-    <section class="section">
+    <section class="section" style="background-color: #FD8C4F;">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a href="index" class="navbar-brand">
-                        <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
+                <div class="container-fluid d-flex flex-column align-items-center">
+                    <a href="index" class="navbar-brand mb-4">
+                        <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo" style="width: 150px; height: auto;">
                     </a>
-        
+    
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-        
+    
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav gap-5">
                             <li class="nav-item">

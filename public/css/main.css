@@ -2,11 +2,16 @@ html, body {
     margin: 0;
     height: 100%;
     padding: 0;
+    overflow: hidden;
 }
 ::-webkit-scrollbar {
     display: none; 
 }
+ul {
+    list-style-type: none;
+}
 
+/*Card scroll function */
 .scroll-container {
     height: 100vh;
     overflow-y: scroll; 
