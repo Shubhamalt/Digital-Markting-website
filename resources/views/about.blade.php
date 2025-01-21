@@ -1,6 +1,5 @@
 @extends('layouts.layout')
 @section('about')
-<!-- Navbar -->
 
 <div class="scroll-container">
     <section class="section" style="background-color: #FD8C4F;">

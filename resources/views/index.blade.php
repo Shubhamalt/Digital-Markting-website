@@ -32,6 +32,7 @@
             </header>
         </section>
         
+        <!-- Double Section -->
         <section class="section bg-warning">
             <div class="container">
                 <div class="row align-items-center">
