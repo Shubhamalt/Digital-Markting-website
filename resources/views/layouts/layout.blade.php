@@ -25,6 +25,9 @@
     @yield('home')
     @yield('aboutus')
     @yield('book')
+    @yield('forgotpassword')
+    @yield('resetpassword')
+    @yield('verifyEmail')
     <!--
 <div id="content" class="overlap">
 

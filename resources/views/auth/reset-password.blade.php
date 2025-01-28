@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('login')
+@section('resetpassword')
 <div style="background-color: #BC67">
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="text-center">
@@ -13,10 +13,12 @@
                     {{session()->get("error")}}
                 </div>
             @endif
+                
             <img src="/img/logo.png" alt="SticMarketing Logo" style="height: 10vh;">
-            <h1 class="mb-3">Login</h1>
-            <form action="{{route("login.post")}}" method="post">
+            <h1 class="mb-3">Reset your password</h1>
+            <form action="{{route('password.update')}}" method="post">
                 @csrf
+                <input type="hidden" name="token" value="{{$token}}">
                 <div class="form-group mb-3">
                     <input type="text" placeholder="Email" name="email" id="email" class="form-control" required>
                     @if ($errors->has('email'))
@@ -29,17 +31,22 @@
                     <input type="password" placeholder="Password" id="password" class="form-control" name="password" required>
                     @if ($errors->has('password'))
                         <span class="text-danger">
-                            {{$errors-first('password')}}
+                            {{$errors->first('password')}}
                         </span>
                     @endif
                 </div>
-                <div class="mb-4">
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">Remember me</label>
-                    <a href="{{route('password.request')}}">Forgot password?</a>
+                {{-- Confirm password --}}
+                <div class="form-group mb-3">
+                    <input type="password" placeholder="Password" class="input @error('password') ring-red-500 @enderror" name="password_confirmation" required>
+                    @if ($errors->has('password'))
+                        <span class="text-danger">
+                            {{$errors->first('password')}}
+                        </span>
+                    @endif
                 </div>
+
                 <div class="d-grid mx-auto">
-                    <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Reset password</button>
                 </div>
             </form>
         </div>
