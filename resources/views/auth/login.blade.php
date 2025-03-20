@@ -35,6 +35,7 @@
                 </div>
                 <div class="mb-4">
                     <a href="{{route('password.request')}}">Forgot password?</a>
+                    <a href="{{route('register')}}">Make account</a>
                 </div>
                 <div class="d-grid mx-auto">
                     <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
