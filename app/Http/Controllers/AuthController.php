@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class AuthController extends Controller
 
         if ($user->save()) {
             event(new Registered($user));
-            return redirect()->route('verification.notice')->with('Success', 'Please verify your email address.');
+            return redirect()->route('login')->with('Success', 'Please verify your email address.');
         }
 
         return redirect(route("register"))->with("Error", "Registration failed. Please try again.");
@@ -58,8 +59,31 @@ class AuthController extends Controller
     //Verify email notice handler
     public function verifyNotice()
     {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Get the authenticated user
+            $user = Auth::user();
+
+            // Manually check if the email is verified
+            if ($user->email_verified_at) {
+                return redirect('/index');
+            }
+        }
+
+        // If the user is not authenticated or has not verified their email, show the verification page
         return view('auth.verify-email');
     }
+
+    // Logout function (must be outside of verifyNotice)
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
+
     //Email verification Handler route
     public function verifyEmail(EmailVerificationRequest $request)
     {
@@ -73,4 +97,6 @@ class AuthController extends Controller
 
         return back()->with('message', 'Verification link sent!');
     }
+
+    
 }

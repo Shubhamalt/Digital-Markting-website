@@ -34,8 +34,6 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">Remember me</label>
                     <a href="{{route('password.request')}}">Forgot password?</a>
                 </div>
                 <div class="d-grid mx-auto">
