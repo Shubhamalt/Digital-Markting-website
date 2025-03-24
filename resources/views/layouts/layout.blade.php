@@ -23,11 +23,13 @@
     @yield('register')
     @yield('login')
     @yield('home')
-    @yield('aboutus')
+    @yield('about')
     @yield('book')
     @yield('forgotpassword')
     @yield('resetpassword')
     @yield('verifyEmail')
+    @yield('admin')
+    @yield('Mailstatus')
     <!--
 <div id="content" class="overlap">
 
