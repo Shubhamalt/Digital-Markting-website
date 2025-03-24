@@ -44,22 +44,24 @@ class AuthController extends Controller
     {
         $request->validate([
             "name" => "required",
-            "email" => "required|email",
+            "email" => "required|email|unique:users,email",
             "password" => "required|min:8",
         ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-
-        if ($user->save()) {
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), 
+        ]);
+    
+        if ($user) {    
             event(new Registered($user));
-            return redirect()->route('verification.notice')->with('Success', 'Please verify your email address.');
+            return redirect()->route('verification.notice')->with('success', 'Please verify your email address.');
         }
-
-        return redirect(route("register"))->with("Error", "Registration failed. Please try again.");
+    
+        return redirect(route("register"))->with("error", "Registration failed. Please try again.");
     }
+    
 
     public function verifyNotice()
     {
