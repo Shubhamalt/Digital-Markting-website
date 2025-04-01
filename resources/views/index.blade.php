@@ -5,34 +5,47 @@
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
                     <div class="container-fluid d-flex flex-column align-items-center">
-                        <a href="index" class="navbar-brand mb-4">
+                        <a href="/" class="navbar-brand mb-4">
                             <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo" style="width: 150px; height: auto;">
                         </a>
-        
+                
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-        
+                
                         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                             <ul class="navbar-nav gap-5">
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="index">Home</a>
+                                    <a class="nav-link {{ Request::is('index') ? 'text-black' : 'text-white' }}" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="about">About us</a>
+                                    <a class="nav-link {{ Request::is('about') ? 'text-black' : 'text-white' }}" href="about">About us</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="book">Book a meeting</a>
+                                    <a class="nav-link {{ Request::is('book') ? 'text-black' : 'text-white' }}" href="book">Book a meeting</a>
                                 </li>
+                            </ul>
+                
+                            <ul class="navbar-nav ms-auto">
+                                @auth
+                                    <li class="nav-item">
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Logout</button>
+                                        </form>
+                                    </li>
+                                @else
+                                    <li class="nav-item">
+                                        <a href="{{ route('login') }}" class="btn btn-primary">Register / Login</a>
+                                    </li>
+                                @endauth
                             </ul>
                         </div>
                     </div>
                 </nav>
             </header>
         </section>
-        
-        <!-- Double Section -->
         <section class="section bg-warning">
             <div class="container">
                 <div class="row align-items-center">
@@ -46,7 +59,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section class="section bg-success">
             <div class="container text-center">
                 <h1>Our Numbers</h1>
@@ -66,7 +78,6 @@
             </div>
         </section>
 
-        <!-- Services Section -->
         <section class="section bg-primary">
             <div class="container text-center">
                 <h1>Our Services</h1>
