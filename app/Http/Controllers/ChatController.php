@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use League\Csv\Reader;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -13,8 +14,14 @@ class ChatController extends Controller
 
     public function handle(Request $request)
     {
+        if (!Auth::check()) { 
+            return response()->json([
+                'error' => 'Authentication required',
+                'message' => 'Please sign in to use the chatbot',
+                'auth_required' => true
+            ], 401); 
+        }
         $request->validate(['message' => 'required|string']);
-        
         $userMessage = $request->message;
         $response = $this->getBotResponse($userMessage);
 

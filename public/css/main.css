@@ -54,95 +54,118 @@ h6 {
 
 /* Chatbot css starts from here */
 
-/* css for chatbox of chatbot starts here */
-#chatbox{
-    overflow-y: scroll;
-}
-.overlap {
+.chat-wrapper {
     position: fixed;
-    right: 5px;
     bottom: 20px;
-    z-index: 13;
+    right: 20px;
+    z-index: 1000;
+    width: 350px;
+    transition: transform 0.3s ease;
 }
 
-.messagebox{
-    margin-left: 90rem;
-    width: 19%;
+.chat-container {
+    display: none;
+    height: 500px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
 }
-.chatdisplay{
-    margin-top: auto;
-    margin-left: 90rem;
-    height: 300px;
-    z-index: 12; 
-    width: 400px;   
-    background-color: white;  
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+
+.chat-container.show {
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease;
 }
-.chatbtn {
+
+.chat-toggle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.message-bubble {
+    max-width: 80%;
+    border-radius: 1.25rem;
+    word-wrap: break-word;
+}
+
+.user-message {
+    margin-left: auto;
+    border-bottom-right-radius: 5px !important;
+}
+
+.bot-message {
+    margin-right: auto;
+    border-bottom-left-radius: 5px !important;
+}
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 576px) {
+    .chat-wrapper {
+        width: 90%;
+        right: 5%;
+        bottom: 10px;
+    }
+    .chat-container {
+        height: 70vh;
+    }
+}
+#guestMessage {
+    display: none;
     position: fixed;
-    bottom: 10px;
-    padding: 1%;
-    right: 0.8rem;  
-    z-index: 12;  
-    background-color: none;
-    border: none;
-    font-size: 45px;
-    color: purple;
-    background: none;
-}
-.sendbtn{
-    margin-bottom: 5%;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
 }
 
-/* css for chatbox of chatbot ends here */
+#guestMessage.show {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@media (max-width: 576px) {
+    #guestMessage {
+        width: 90%;
+        right: 5%;
+    }
+}
 
 /* Chatbot css ends here */
 
-/* cs for about us page */
-
-
-
-/* cs for about us page ends */
 
 /* ---------- css for booking page starts here ---------- */
 
-.radius{
-    width: 80%; 
-    height: auto; 
-    max-width: 1200px;
-    border: 1px solid #b197fc;
-    border-radius: 1%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-}
-.line{
-    border-right: 1px solid #b197fc;
-    height: 100%;
-}
-
 .bookbgimg {
-    background-image: url(../img/meeting3.jpg);
+    background: url('/img/meeting3.jpg') no-repeat center center;
     background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100vh; 
-    display: flex;
-    align-items: center;
 }
 
-.bookbox{
-    margin-top: 0; 
-    padding: 20px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.min-vh-100 {
+    min-height: 100vh;
 }
-.borderbox{
-    border: 1px solid #b197fc;
+
+.rounded-3 {
+    border-radius: 1rem !important;
 }
-input[name="detail"] {
-    height: 60%;
-    padding: 0.5rem;
+
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
 }
+
 
 /* ---------- css for other company and stic company starts ---------- */
 

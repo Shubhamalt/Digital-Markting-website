@@ -46,11 +46,15 @@ Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])-
 Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 //Booking route
-Route::post('/book', [BookingController::class, 'store'])->name('book.store');
+Route::middleware(['auth'])->group(function(){
+  Route::post('/book', [BookingController::class, 'store'])->name('book.store');
+});
 
 //admin
 Route::get('admin' ,[App\Http\Controllers\BookingController::class, 'admin']);
 Route::put('/meetings/{id}', [MeetingController::class, 'update'])->name('meetings.update');
 
-Route::get('/chat', [ChatController::class, 'show'])->name('chat.show');
-Route::post('/chat/send', [ChatController::class, 'handle'])->name('chat.send');
+//chatbot
+Route::middleware(['auth'])->group(function () {
+  Route::post('/chat/send', [ChatController::class, 'handle'])->name('chat.send');
+});
