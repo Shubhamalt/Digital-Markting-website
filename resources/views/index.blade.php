@@ -17,7 +17,7 @@
                         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                             <ul class="navbar-nav gap-5">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Request::is('index') ? 'text-black' : 'text-white' }}" href="/">Home</a>
+                                    <a class="nav-link {{ Request::is('index') ? 'text-black' : 'text-black' }}" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::is('about') ? 'text-black' : 'text-white' }}" href="about">About us</a>
