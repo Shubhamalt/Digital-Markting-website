@@ -1,30 +1,42 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use League\Csv\Reader;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function sendMessage(Request $request){
-        $userMessage = $request -> input('message');
-        $botReply = $this->getBotReply($userMessage);
-
-        return response() -> json(['reply' => $botReply]);
+    public function show()
+    {
+        return view('chat');
     }
 
-    private function getBotReply($message){
-        if(strtolower($message) == 'hello'){
-            return 'Hello! How are you';
+    public function handle(Request $request)
+    {
+        $request->validate(['message' => 'required|string']);
+        
+        $userMessage = $request->message;
+        $response = $this->getBotResponse($userMessage);
+
+        return response()->json(['response' => $response]);
+    }
+
+    private function getBotResponse($message)
+    {
+        $csv = Reader::createFromPath(storage_path('app/digital_marketing_qna.csv'), 'r');
+        $csv->setHeaderOffset(0);
+        
+        $bestMatch = ['similarity' => 0, 'answer' => "I'm not sure about that. Can you ask something else?"];
+        $message = strtolower(trim($message));
+
+        foreach ($csv as $row) {
+            $similarity = similar_text($message, strtolower(trim($row['question'])), $percent);
+            
+            if ($percent > $bestMatch['similarity']) {
+                $bestMatch = ['similarity' => $percent, 'answer' => $row['answer']];
+            }
         }
-        elseif(strtolower($message) == 'bye'){
-            return 'Goodbye!';
-        }
-        elseif(strtolower($message) == 'what are your fees'){
-            return 'Please contact us';
-        }
-        else{
-            return "I'm sorry I don't understand";
-        }
+
+        return $bestMatch['similarity'] >= 60 ? $bestMatch['answer'] : $bestMatch['answer'];
     }
 }

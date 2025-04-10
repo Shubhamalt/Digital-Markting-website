@@ -51,3 +51,6 @@ Route::post('/book', [BookingController::class, 'store'])->name('book.store');
 //admin
 Route::get('admin' ,[App\Http\Controllers\BookingController::class, 'admin']);
 Route::put('/meetings/{id}', [MeetingController::class, 'update'])->name('meetings.update');
+
+Route::get('/chat', [ChatController::class, 'show'])->name('chat.show');
+Route::post('/chat/send', [ChatController::class, 'handle'])->name('chat.send');

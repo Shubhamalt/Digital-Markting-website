@@ -30,6 +30,7 @@
     @yield('verifyEmail')
     @yield('admin')
     @yield('Mailstatus')
+    @yield('chat')
     <!--
 <div id="content" class="overlap">
 
