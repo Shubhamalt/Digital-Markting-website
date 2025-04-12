@@ -35,14 +35,13 @@
                         </span>
                     @endif
                 </div>
-                {{-- Confirm password --}}
                 <div class="form-group mb-3">
-                    <input type="password" placeholder="Password" class="input @error('password') ring-red-500 @enderror" name="password_confirmation" required>
-                    @if ($errors->has('password'))
+                    <input type="password" placeholder="Confirm Password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required>
+                    @error('password_confirmation')
                         <span class="text-danger">
-                            {{$errors->first('password')}}
+                            {{ $message }}
                         </span>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="d-grid mx-auto">
