@@ -4,47 +4,60 @@
         <section class="section" style="background-color: #FD8C4F;">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
-                    <div class="container-fluid d-flex flex-column align-items-center">
-                        <a href="/" class="navbar-brand mb-4">
-                            <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo"
-                                style="width: 150px; height: auto;">
-                        </a>
-
+                    <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                            <ul class="navbar-nav gap-5">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Request::is('index') ? 'text-black' : 'text-white' }}"
-                                        href="/">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Request::is('about') ? 'text-black' : 'text-white' }}"
-                                        href="about">About us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Request::is('book') ? 'text-black' : 'text-white' }}"
-                                        href="book">Book a meeting</a>
-                                </li>
-                            </ul>
+                        <div class="d-flex flex-column align-items-center w-100">
+                            <a href="/" class="navbar-brand mb-4">
+                                <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo"
+                                    style="width: 150px; height: auto;">
+                            </a>
 
-                            <ul class="navbar-nav ms-auto">
-                                @auth
+                            <div class="collapse navbar-collapse justify-content-center w-100" id="navbarNav">
+                                <ul class="navbar-nav gap-3 gap-lg-5 align-items-center">
                                     <li class="nav-item">
-                                        <form action="{{ route('logout') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Logout</button>
-                                        </form>
+                                        <a class="nav-link text-white" href="/">Home</a>
                                     </li>
-                                @else
                                     <li class="nav-item">
-                                        <a href="{{ route('login') }}" class="btn btn-primary">Register / Login</a>
+                                        <a class="nav-link text-white" href="about">About us</a>
                                     </li>
-                                @endauth
-                            </ul>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-black" href="book">Book a meeting</a>
+                                    </li>
+
+                                    @auth
+                                        @if (Auth::user()->is_admin)
+                                            <li class="nav-item">
+                                                <a class="nav-link text-success {{ Request::is('admin') ? 'active' : '' }}"
+                                                    href="{{ route('admin') }}">Dashboard</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-success {{ Request::is('admin/chat-logs') ? 'active' : '' }}"
+                                                    href="{{ route('admin.chat-logs') }}">Chat Logs</a>
+                                            </li>
+                                        @endif
+                                    @endauth
+                                    <li class="nav-item ms-lg-auto">
+                                        @auth
+                                            <div class="d-flex gap-3 align-items-center">
+                                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        Logout
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <a href="{{ route('login') }}" class="btn btn-primary btn-sm">
+                                                Register / Login
+                                            </a>
+                                        @endauth
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -94,14 +107,16 @@
 
                                         <div class="col-md-4">
                                             <label class="form-label">Date</label>
-                                            <input type="date" class="form-control" name="book" id="BookDate"
-                                                value="{{ old('book') }}" required>
+                                            <input type="date" class="form-control no-saturday" name="book" id="BookDate"
+                                                value="{{ old('book') }}" required min="{{ date('Y-m-d') }}"
+                                                oninput="validateDate(this)">
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="form-label">Time</label>
-                                            <input type="time" class="form-control" name="time" id="TimeBook"
-                                                value="{{ old('time') }}" required>
+                                            <input type="time" class="form-control time-input" name="time" id="TimeBook"
+                                                value="{{ old('time') }}" min="08:00" max="18:00" step="1800"
+                                                required placeholder="--:-- --">
                                         </div>
 
                                         <div class="col-md-4">
@@ -136,7 +151,7 @@
 
                                         <div class="col-12 text-center">
                                             <button type="submit" class="btn btn-primary btn-lg px-5" name="bookbtn">
-                                                Schedule Event
+                                                Schedule Meeting
                                             </button>
                                         </div>
                                     </div>
@@ -146,7 +161,7 @@
                                     <h4>Please sign in to book a meeting</h4>
                                     <div class="mt-3">
                                         <a href="{{ route('login') }}" class="btn btn-primary me-2">
-                                             Login
+                                            Login
                                         </a>
                                         @if (Route::has('register'))
                                             <a href="{{ route('register') }}" class="btn btn-success">
@@ -165,24 +180,52 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date();
             const bookDateInput = document.getElementById("BookDate");
             const bookTimeInput = document.getElementById("TimeBook");
 
             if (bookDateInput) {
+                const today = new Date();
                 bookDateInput.min = today.toISOString().split("T")[0];
 
-                bookDateInput.addEventListener("change", function() {
+                bookDateInput.addEventListener('change', function() {
                     const selectedDate = new Date(this.value);
-                    const now = new Date();
-
-                    if (selectedDate.toDateString() === now.toDateString()) {
-                        const currentTime = now.getHours().toString().padStart(2, '0') + ":" +
-                            now.getMinutes().toString().padStart(2, '0');
-                        bookTimeInput.min = currentTime;
-                    } else {
-                        bookTimeInput.removeAttribute("min");
+                    if (selectedDate.getDay() === 6) {
+                        alert("Meeting can only be done from sunday to friday");
+                        this.value = '';
                     }
+                });
+            }
+
+            if (bookTimeInput && form) {
+                form.addEventListener('submit', function(e) {
+                    const timeValue = bookTimeInput.value;
+
+                    if (timeValue) {
+                        const [hours, minutes] = timeValue.split(':').map(Number);
+
+                        if (hours < 8 || hours >= 18) {
+                            e.preventDefault();
+                            alert("Bookings are only available between 8 AM and 6 PM");
+                            bookTimeInput.focus();
+                            return false;
+                        }
+
+                        const selectedDate = new Date(bookDateInput.value);
+                        const now = new Date();
+
+                        if (selectedDate.toDateString() === now.toDateString()) {
+                            const selectedTime = new Date();
+                            selectedTime.setHours(hours, minutes);
+
+                            if (selectedTime < now) {
+                                e.preventDefault();
+                                alert("You cannot book a time in the past");
+                                bookTimeInput.focus();
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
                 });
             }
         });
