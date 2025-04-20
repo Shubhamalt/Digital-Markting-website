@@ -3,60 +3,52 @@
     <div class="scroll-container">
         <section class="section" style="background-color: #FD8C4F;">
             <header>
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
-                    <div class="container-fluid">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-            
-                        <div class="d-flex flex-column align-items-center w-100">
-                            <a href="/" class="navbar-brand mb-4">
-                                <img class="logo" src="{{ asset('img/logo.png') }}" alt="logo" style="width: 150px; height: auto;">
+                <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+                    <div class="container-fluid flex-column">
+                        <!-- Logo and Toggler Row -->
+                        <div class="d-flex w-100 justify-content-center align-items-center">
+                            <a href="/" class="navbar-brand">
+                                <img src="{{ asset('img/logo.png') }}" alt="logo" class="img-fluid" style="width: 150px;">
                             </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
             
-                            <div class="collapse navbar-collapse justify-content-center w-100" id="navbarNav">
-                                <ul class="navbar-nav gap-3 gap-lg-5 align-items-center"> 
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white }}" href="/">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black "href="about">About us</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" href="book">Book a meeting</a>
-                                    </li>
+                        <div class="collapse navbar-collapse w-100" id="navbarNav">
+                            <ul class="navbar-nav w-100 justify-content-center align-items-lg-center gap-3 gap-lg-5">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-black" href="about">About us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="book">Book a meeting</a>
+                                </li>
             
+                                @auth
+                                    @if(Auth::user()->is_admin)
+                                        <li class="nav-item">
+                                            <a class="nav-link text-success" href="{{ route('admin') }}">Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-success" href="{{ route('admin.chat-logs') }}">Chat Logs</a>
+                                        </li>
+                                    @endif
+                                @endauth
+                                
+                                <li class="nav-item ms-lg-auto">
                                     @auth
-                                        @if(Auth::user()->is_admin)
-                                            <li class="nav-item">
-                                                <a class="nav-link text-success {{ Request::is('admin') ? 'active' : '' }}" 
-                                                   href="{{ route('admin') }}">Dashboard</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-success {{ Request::is('admin/chat-logs') ? 'active' : '' }}" 
-                                                   href="{{ route('admin.chat-logs') }}">Chat Logs</a>
-                                            </li>
-                                        @endif
+                                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Register / Login</a>
                                     @endauth
-                                    <li class="nav-item ms-lg-auto">
-                                        @auth
-                                            <div class="d-flex gap-3 align-items-center">
-                                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        Logout
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        @else
-                                            <a href="{{ route('login') }}" class="btn btn-primary btn-sm">
-                                                Register / Login
-                                            </a>
-                                        @endauth
-                                    </li>
-                                </ul>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
@@ -78,7 +70,7 @@
                 </div>
             </div>
         </section>
-    
+
         <div class="section bg-success">
             <div class="container gap123">
                 <div class="row">
