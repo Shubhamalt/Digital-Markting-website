@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
@@ -51,10 +52,16 @@ Route::middleware(['auth'])->group(function(){
 });
 
 //admin
-Route::get('admin' ,[App\Http\Controllers\BookingController::class, 'admin']);
-Route::put('/meetings/{id}', [MeetingController::class, 'update'])->name('meetings.update');
+Route::middleware(['auth', 'admin'])->group(function () {
+  Route::get('/admin', [BookingController::class, 'admin'])->name('admin');
+  Route::put('/meetings/{id}', [MeetingController::class, 'update'])->name('meetings.update');
+});
+
 
 //chatbot
 Route::middleware(['auth'])->group(function () {
   Route::post('/chat/send', [ChatController::class, 'handle'])->name('chat.send');
+});
+Route::middleware(['auth', 'admin'])->group(function () {
+  Route::get('/chat-logs', [AdminController::class, 'chatLogs'])->name('admin.chat-logs');
 });
