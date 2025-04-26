@@ -5,7 +5,6 @@
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
                     <div class="container-fluid flex-column">
-                        <!-- Logo and Toggler Row -->
                         <div class="d-flex w-100 justify-content-center align-items-center">
                             <a href="/" class="navbar-brand">
                                 <img src="{{ asset('img/logo.png') }}" alt="logo" class="img-fluid" style="width: 150px;">
@@ -56,69 +55,68 @@
         </section>
 
         <section class="section" id="formSection">
-            <div class="container-fluid bookbgimg d-flex align-items-end min-vh-100" style="padding-bottom: 50px;">
+            <div class="container-fluid bookbgimg d-flex align-items-end min-vh-100 pb-3 pb-lg-5">
                 <div class="container">
-                    <div class="row justify-content-center mb-0">
-                        <div class="col-lg-8 col-md-10 bg-white rounded-3 shadow p-4" style="margin-top: auto;">
-                            <h3 class="text-center mb-4">Check Booking</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8 bg-white rounded-3 shadow p-3 p-lg-4">
+                            <h3 class="text-center fs-5 fs-md-4 mb-3 mb-md-4">Check Booking</h3>
                             @auth
                                 @if (session('success'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <div class="alert alert-success alert-dismissible fade show py-2 py-md-3" role="alert">
                                         {{ session('success') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                     </div>
                                 @endif
-
+        
                                 @if ($errors->any())
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <div class="alert alert-danger alert-dismissible fade show py-2 py-md-3" role="alert">
                                         <ul class="mb-0">
                                             @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
+                                                <li class="fs-7 fs-md-6">{{ $error }}</li>
                                             @endforeach
                                         </ul>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                     </div>
                                 @endif
-
-                                <form action="{{ route('book.store') }}#formSection" method="post" class="needs-validation"
-                                    novalidate>
+        
+                                <form action="{{ route('book.store') }}#formSection" method="post" class="needs-validation" novalidate>
                                     @csrf
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Name</label>
-                                            <input type="text" class="form-control" placeholder="What's your name"
+                                    <div class="row g-2 g-md-3">
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fs-6 fs-md-5">Name</label>
+                                            <input type="text" class="form-control form-control-lg" placeholder="What's your name"
                                                 name="name" value="{{ old('name') }}" required>
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" class="form-control" placeholder="name@gmail.com"
+        
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fs-6 fs-md-5">Email</label>
+                                            <input type="email" class="form-control form-control-lg" placeholder="name@gmail.com"
                                                 name="email" value="{{ old('email') }}" required>
                                         </div>
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">Date</label>
-                                            <input type="date" class="form-control no-saturday" name="book" id="BookDate"
-                                                value="{{ old('book') }}" required min="{{ date('Y-m-d') }}"
+        
+                                        <div class="col-12 col-md-4">
+                                            <label class="form-label fs-6 fs-md-5">Date</label>
+                                            <input type="date" class="form-control form-control-lg no-saturday" name="book" 
+                                                id="BookDate" value="{{ old('book') }}" required min="{{ date('Y-m-d') }}"
                                                 oninput="validateDate(this)">
                                         </div>
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">Time</label>
-                                            <input type="time" class="form-control time-input" name="time" id="TimeBook"
-                                                value="{{ old('time') }}" min="08:00" max="18:00" step="1800"
+        
+                                        <div class="col-12 col-md-4">
+                                            <label class="form-label fs-6 fs-md-5">Time</label>
+                                            <input type="time" class="form-control form-control-lg time-input" name="time" 
+                                                id="TimeBook" value="{{ old('time') }}" min="08:00" max="18:00" step="1800"
                                                 required placeholder="--:-- --">
                                         </div>
-
-                                        <div class="col-md-4">
-                                            <label class="form-label">Business Profile URL</label>
-                                            <input type="url" class="form-control" placeholder="www.company.com"
+        
+                                        <div class="col-12 col-md-4">
+                                            <label class="form-label fs-6 fs-md-5">Business Profile URL</label>
+                                            <input type="url" class="form-control form-control-lg" placeholder="www.company.com"
                                                 name="url" value="{{ old('url') }}">
                                         </div>
-
+        
                                         <div class="col-12">
-                                            <label class="form-label">Required Service</label>
-                                            <select class="form-select" name="drop" required>
+                                            <label class="form-label fs-6 fs-md-5">Required Service</label>
+                                            <select class="form-select form-select-lg" name="drop" required>
                                                 <option value="" selected disabled>Choose...</option>
                                                 <option value="Social Media Management"
                                                     {{ old('drop') == 'Social Media Management' ? 'selected' : '' }}>
@@ -133,31 +131,31 @@
                                                 </option>
                                             </select>
                                         </div>
-
+        
                                         <div class="col-12">
-                                            <label class="form-label">Additional Information</label>
-                                            <textarea class="form-control" name="detail" rows="3"
+                                            <label class="form-label fs-6 fs-md-5">Additional Information</label>
+                                            <textarea class="form-control form-control-lg" name="detail" rows="3"
                                                 placeholder="Please share anything that will help prepare for our meeting">{{ old('detail') }}</textarea>
                                         </div>
-
-                                        <div class="col-12 text-center">
-                                            <button type="submit" class="btn btn-primary btn-lg px-5" name="bookbtn">
+        
+                                        <div class="col-12 text-center mt-2 mt-md-3">
+                                            <button type="submit" class="btn btn-primary btn-lg px-4 px-lg-5" name="bookbtn">
                                                 Schedule Meeting
                                             </button>
                                         </div>
                                     </div>
                                 </form>
-                            @else
-                                <div class="alert alert-warning text-center">
-                                    <h4>Please sign in to book a meeting</h4>
-                                    <div class="mt-3">
-                                        <a href="{{ route('login') }}" class="btn btn-primary me-2">
+                                @else
+                                <div class="alert alert-warning text-center py-3">
+                                    <h4 class="h5 mb-3">Please sign in to book a meeting</h4>
+                                    <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                                        <a href="{{ route('login') }}" class="btn btn-primary btn-lg w-100 w-md-auto">
                                             Login
                                         </a>
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}" class="btn btn-success">
-                                                Register
-                                            </a>
+                                        @if(Route::has('register'))
+                                        <a href="{{ route('register') }}" class="btn btn-success btn-lg w-100 w-md-auto">
+                                            Register
+                                        </a>
                                         @endif
                                     </div>
                                 </div>
@@ -212,7 +210,6 @@
                     bookTimeInput.min = minTime;
                     bookTimeInput.value = ''; 
                     
-                    // Show message to user
                     alert(`For today, you can only book from ${minTime} onwards`);
                 } else {
                     bookTimeInput.min = '08:00';

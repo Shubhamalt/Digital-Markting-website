@@ -10,7 +10,6 @@ class BookingController extends Controller
 {
     public function store(Request $request)
     {
-        // Validate incoming request with additional rules
         $validated = $request->validate([
             'name' => 'required|string',
             'book' => [
@@ -39,7 +38,6 @@ class BookingController extends Controller
             'detail' => 'nullable|string',
         ]);
 
-        // Additional validation for current day times
         $selectedDate = Carbon::parse($request->book);
         $currentTime = Carbon::now();
         

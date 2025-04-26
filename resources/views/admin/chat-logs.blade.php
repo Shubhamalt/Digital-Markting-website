@@ -5,7 +5,6 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
             <div class="container-fluid flex-column">
-                <!-- Logo and Toggler Row -->
                 <div class="d-flex w-100 justify-content-center align-items-center">
                     <a href="/" class="navbar-brand">
                         <img src="{{ asset('img/logo.png') }}" alt="logo" class="img-fluid" style="width: 150px;">
