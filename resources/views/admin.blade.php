@@ -2,49 +2,50 @@
 @section('admin')
 <div class="d-flex flex-column min-vh-100">
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-            <div class="container">
-                <div class="d-flex justify-content-between w-100 align-items-center">
-                    <a class="navbar-brand" href="/">
-                        <img src="{{ asset('img/logo.png') }}" alt="Logo" style="height: 40px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+            <div class="container-fluid flex-column">
+                <div class="d-flex w-100 justify-content-center align-items-center">
+                    <a href="/" class="navbar-brand">
+                        <img src="{{ asset('img/logo.png') }}" alt="logo" class="img-fluid" style="width: 150px;">
                     </a>
-                    
-                    <div class="d-flex align-items-center gap-2">
-                        @auth
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                        </form>
-                        @else
-                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Login</a>
-                        @endauth
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
-
-                <div class="collapse navbar-collapse mt-2" id="mainNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    
+                <div class="collapse navbar-collapse w-100" id="navbarNav">
+                    <ul class="navbar-nav w-100 justify-content-center align-items-lg-center gap-3 gap-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link text-black" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about">About</a>
+                            <a class="nav-link text-black" href="about">About us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="book">Book Meeting</a>
+                            <a class="nav-link text-black" href="book">Book a meeting</a>
                         </li>
+    
                         @auth
-                        @if(Auth::user()->is_admin)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.chat-logs') }}">Chat Logs</a>
-                        </li>
-                        @endif
+                            @if(Auth::user()->is_admin)
+                                <li class="nav-item">
+                                    <a class="nav-link text-black" href="{{ route('admin') }}">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-black" href="{{ route('admin.chat-logs') }}">Chat Logs</a>
+                                </li>
+                            @endif
                         @endauth
+                        
+                        <li class="nav-item ms-lg-auto">
+                            @auth
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Register / Login</a>
+                            @endauth
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -120,7 +121,8 @@
                             <td data-label="Actions">
                                 @if($record->status == 'pending')
                                 <div class="d-flex flex-sm-row gap-1">
-                                    <form method="POST" action="{{ route('meetings.update', $record->id) }}" class="flex-fill">
+                                    <form method="POST" action="{{ route('meetings.update', $record->id) }}" class="flex-fill" 
+                                          onsubmit="return confirm('Are you sure you want to accept this booking?')">
                                         @csrf @method('PUT')
                                         <input type="hidden" name="status" value="accepted">
                                         <button type="submit" class="btn btn-success btn-sm w-100">
@@ -128,7 +130,8 @@
                                             <span class="d-none d-sm-inline">Accept</span>
                                         </button>
                                     </form>
-                                    <form method="POST" action="{{ route('meetings.update', $record->id) }}" class="flex-fill">
+                                    <form method="POST" action="{{ route('meetings.update', $record->id) }}" class="flex-fill" 
+                                          onsubmit="return confirm('Are you sure you want to decline this booking?')">
                                         @csrf @method('PUT')
                                         <input type="hidden" name="status" value="declined">
                                         <button type="submit" class="btn btn-danger btn-sm w-100">
